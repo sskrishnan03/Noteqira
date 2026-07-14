@@ -1,20 +1,18 @@
 import { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   ArrowLeft,
   FolderOpen,
   Plus,
-  MoreHorizontal,
   Edit3,
   Trash2,
   FileText,
   Loader2,
-  Palette,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { supabase } from '@/lib/supabase';
+import { db } from '@/lib/data';
 
 const colorOptions = [
   '#3b82f6',
@@ -28,7 +26,6 @@ const colorOptions = [
 ];
 
 export default function Collections() {
-  const [searchParams] = useSearchParams();
   const queryClient = useQueryClient();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingNotebook, setEditingNotebook] = useState<string | null>(null);
@@ -41,26 +38,14 @@ export default function Collections() {
 
   const { data: notebooks, isLoading } = useQuery({
     queryKey: ['notebooks'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('notebooks')
-        .select('*')
-        .eq('is_archived', false)
-        .order('updated_at', { ascending: false });
-      if (error) throw error;
-      return data;
-    },
+    queryFn: () => db.getNotebooks(),
   });
 
   const { data: notes } = useQuery({
     queryKey: ['notes'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('notes')
-        .select('id, notebook_id')
-        .eq('is_archived', false);
-      if (error) throw error;
-      return data;
+      const data = await db.getNotes({ archived: false });
+      return data.map(({ id, notebook_id }) => ({ id, notebook_id }));
     },
   });
 
@@ -69,10 +54,7 @@ export default function Collections() {
   };
 
   const createMutation = useMutation({
-    mutationFn: async () => {
-      const { error } = await supabase.from('notebooks').insert([newNotebook]);
-      if (error) throw error;
-    },
+    mutationFn: () => db.createNotebook(newNotebook),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notebooks'] });
       toast.success('Notebook created');
@@ -87,13 +69,7 @@ export default function Collections() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: async (data: { id: string; updates: Record<string, unknown> }) => {
-      const { error } = await supabase
-        .from('notebooks')
-        .update(data.updates)
-        .eq('id', data.id);
-      if (error) throw error;
-    },
+    mutationFn: (data: { id: string; updates: Record<string, unknown> }) => db.updateNotebook(data.id, data.updates),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notebooks'] });
       toast.success('Notebook updated');
@@ -102,10 +78,7 @@ export default function Collections() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from('notebooks').delete().eq('id', id);
-      if (error) throw error;
-    },
+    mutationFn: (id: string) => db.deleteNotebook(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notebooks'] });
       toast.success('Notebook deleted');
@@ -114,28 +87,28 @@ export default function Collections() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-surface-950 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-primary-400 animate-spin" />
+      <div className="min-h-screen bg-[#0B0B0B] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-white animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-surface-950">
+    <div className="min-h-screen bg-[#0B0B0B]">
       <div className="fixed inset-0 grid-bg opacity-30 pointer-events-none" />
 
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-surface-950/80 backdrop-blur-xl border-b border-white/5">
+      <header className="fixed top-0 left-0 right-0 z-40 bg-[#0B0B0B]/80 backdrop-blur-xl border-b border-[#2A2A2A]">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
               to="/dashboard"
-              className="p-2 rounded-lg text-secondary-400 hover:text-white hover:bg-white/5 transition-colors"
+              className="p-2 rounded-lg text-[#8A8A8A] hover:text-white hover:bg-white/5 transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
             </Link>
             <div className="flex items-center gap-2">
-              <FolderOpen className="w-5 h-5 text-primary-400" />
+              <FolderOpen className="w-5 h-5 text-white" />
               <h1 className="font-semibold text-white">Collections</h1>
             </div>
           </div>
@@ -155,11 +128,11 @@ export default function Collections() {
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-20"
             >
-              <div className="w-20 h-20 rounded-2xl bg-surface-800/50 flex items-center justify-center mx-auto mb-6">
-                <FolderOpen className="w-10 h-10 text-secondary-500" />
+              <div className="w-20 h-20 rounded-2xl bg-[#1B1B1B] flex items-center justify-center mx-auto mb-6">
+                <FolderOpen className="w-10 h-10 text-[#555555]" />
               </div>
               <h2 className="text-xl font-semibold text-white mb-2">No collections yet</h2>
-              <p className="text-secondary-400 mb-6">
+              <p className="text-[#8A8A8A] mb-6">
                 Organize your notes into collections
               </p>
               <button onClick={() => setShowCreateModal(true)} className="btn-primary">
@@ -179,7 +152,7 @@ export default function Collections() {
                 >
                   <Link
                     to={`/dashboard?notebook=${notebook.id}`}
-                    className="glass-card p-6 flex flex-col hover:border-primary-500/30 transition-all hover:-translate-y-1"
+                    className="bg-[#161616] border border-[#2A2A2A] rounded-2xl p-6 flex flex-col hover:border-white/30 transition-all hover:-translate-y-1"
                   >
                     <div
                       className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center"
@@ -192,11 +165,11 @@ export default function Collections() {
                     </div>
                     <h3 className="font-medium text-white mb-1">{notebook.title}</h3>
                     {notebook.description && (
-                      <p className="text-sm text-secondary-400 line-clamp-2">
+                      <p className="text-sm text-[#8A8A8A] line-clamp-2">
                         {notebook.description}
                       </p>
                     )}
-                    <div className="flex items-center gap-2 mt-auto pt-4 text-xs text-secondary-500">
+                    <div className="flex items-center gap-2 mt-auto pt-4 text-xs text-[#555555]">
                       <FileText className="w-3 h-3" />
                       {getNoteCount(notebook.id)} notes
                     </div>
@@ -217,7 +190,7 @@ export default function Collections() {
                           });
                           setShowCreateModal(true);
                         }}
-                        className="p-2 rounded-lg bg-surface-900/80 text-secondary-400 hover:text-white hover:bg-surface-800 transition-colors"
+                        className="p-2 rounded-lg bg-[#111111]/80 text-[#8A8A8A] hover:text-white hover:bg-[#1B1B1B] transition-colors"
                       >
                         <Edit3 className="w-4 h-4" />
                       </button>
@@ -226,7 +199,7 @@ export default function Collections() {
                           e.preventDefault();
                           deleteMutation.mutate(notebook.id);
                         }}
-                        className="p-2 rounded-lg bg-surface-900/80 text-secondary-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                        className="p-2 rounded-lg bg-[#111111]/80 text-[#8A8A8A] hover:text-white hover:bg-white/10 transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -255,7 +228,7 @@ export default function Collections() {
             <motion.div
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
-              className="glass-card p-6 w-full max-w-md"
+              className="bg-[#161616] border border-[#2A2A2A] rounded-2xl p-6 w-full max-w-md"
               onClick={(e) => e.stopPropagation()}
             >
               <h2 className="text-xl font-semibold text-white mb-6">
@@ -264,7 +237,7 @@ export default function Collections() {
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm text-secondary-400 mb-2">Name</label>
+                  <label className="block text-sm text-[#8A8A8A] mb-2">Name</label>
                   <input
                     type="text"
                     value={newNotebook.title}
@@ -275,7 +248,7 @@ export default function Collections() {
                 </div>
 
                 <div>
-                  <label className="block text-sm text-secondary-400 mb-2">Description</label>
+                  <label className="block text-sm text-[#8A8A8A] mb-2">Description</label>
                   <textarea
                     value={newNotebook.description}
                     onChange={(e) => setNewNotebook({ ...newNotebook, description: e.target.value })}
@@ -285,7 +258,7 @@ export default function Collections() {
                 </div>
 
                 <div>
-                  <label className="block text-sm text-secondary-400 mb-2">Color</label>
+                  <label className="block text-sm text-[#8A8A8A] mb-2">Color</label>
                   <div className="flex gap-2">
                     {colorOptions.map((color) => (
                       <button
@@ -293,7 +266,7 @@ export default function Collections() {
                         onClick={() => setNewNotebook({ ...newNotebook, cover_color: color })}
                         className={`w-8 h-8 rounded-lg transition-all ${
                           newNotebook.cover_color === color
-                            ? 'ring-2 ring-white ring-offset-2 ring-offset-surface-900'
+                            ? 'ring-2 ring-white ring-offset-2 ring-offset-[#111111]'
                             : ''
                         }`}
                         style={{ backgroundColor: color }}

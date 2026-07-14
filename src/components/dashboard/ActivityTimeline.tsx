@@ -34,16 +34,6 @@ const actionIcons: Record<string, typeof FileText> = {
   reviewed: BookOpen,
 };
 
-const actionColors: Record<string, string> = {
-  created: 'text-accent-400',
-  updated: 'text-primary-400',
-  deleted: 'text-red-400',
-  favorited: 'text-amber-400',
-  archived: 'text-secondary-400',
-  completed: 'text-accent-400',
-  reviewed: 'text-primary-400',
-};
-
 const actionLabels: Record<string, string> = {
   created: 'Created',
   updated: 'Updated',
@@ -72,13 +62,13 @@ function formatTime(date: string): string {
 export default function ActivityTimeline({ activities, isLoading }: ActivityTimelineProps) {
   if (isLoading) {
     return (
-      <div className="glass-card p-6">
+      <div className="bg-[#161616] border border-[#2A2A2A] rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-4">Activity</h2>
         <div className="space-y-4">
           {[...Array(6)].map((_, i) => (
             <div key={i} className="flex items-start gap-3 animate-pulse">
-              <div className="w-8 h-8 rounded-full bg-surface-800/50" />
-              <div className="flex-1 h-12 bg-surface-800/50 rounded-xl" />
+              <div className="w-8 h-8 rounded-full bg-[#1B1B1B]/50" />
+              <div className="flex-1 h-12 bg-[#1B1B1B]/50 rounded-xl" />
             </div>
           ))}
         </div>
@@ -90,23 +80,21 @@ export default function ActivityTimeline({ activities, isLoading }: ActivityTime
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-card p-6"
+      className="bg-[#161616] border border-[#2A2A2A] rounded-2xl p-6"
     >
       <h2 className="text-lg font-semibold text-white mb-6">Activity Timeline</h2>
 
       {activities.length === 0 ? (
         <div className="text-center py-8">
-          <p className="text-secondary-400">No recent activity</p>
+          <p className="text-[#8A8A8A]">No recent activity</p>
         </div>
       ) : (
         <div className="relative">
-          {/* Timeline line */}
           <div className="absolute left-4 top-0 bottom-0 w-px bg-white/5" />
 
           <div className="space-y-4">
             {activities.map((activity, i) => {
               const Icon = actionIcons[activity.action] || FileText;
-              const colorClass = actionColors[activity.action] || 'text-secondary-400';
               const label = actionLabels[activity.action] || activity.action;
               const resourceName = (activity.metadata as { title?: string })?.title || 'Unknown';
 
@@ -118,17 +106,17 @@ export default function ActivityTimeline({ activities, isLoading }: ActivityTime
                   transition={{ delay: i * 0.05 }}
                   className="relative flex items-start gap-4 pl-2"
                 >
-                  <div className={`w-6 h-6 rounded-full bg-surface-900 flex items-center justify-center z-10 ${colorClass}`}>
+                  <div className="w-6 h-6 rounded-full bg-[#111111] flex items-center justify-center z-10 text-white">
                     <Icon className="w-3 h-3" />
                   </div>
 
                   <div className="flex-1 py-1">
-                    <p className="text-sm text-secondary-300">
+                    <p className="text-sm text-[#C8C8C8]">
                       <span className="text-white font-medium">{label}</span>{' '}
                       {activity.resource_type === 'note' ? 'note' : activity.resource_type || 'item'}:
                       <span className="text-white ml-1">{resourceName}</span>
                     </p>
-                    <p className="text-xs text-secondary-500 mt-0.5">
+                    <p className="text-xs text-[#555555] mt-0.5">
                       {formatTime(activity.created_at)}
                     </p>
                   </div>

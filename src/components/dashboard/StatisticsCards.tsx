@@ -1,16 +1,14 @@
 import { motion } from 'framer-motion';
 import {
   FileText,
-  BookOpen,
   Clock,
-  TrendingUp,
-  Brain,
-  CheckCircle,
+  Image,
 } from 'lucide-react';
 
 interface Note {
   id: string;
   word_count: number;
+  source_type: string;
   created_at: string;
 }
 
@@ -19,38 +17,30 @@ interface StatisticsCardsProps {
 }
 
 export default function StatisticsCards({ notes }: StatisticsCardsProps) {
+  const totalWords = notes.reduce((sum, n) => sum + (n.word_count || 0), 0);
+  const docs = notes.filter((n) => n.source_type === 'document').length;
+  const studyHours = totalWords > 0 ? Math.round(totalWords / 200 * 10) / 10 : 0;
+
   const stats = [
     {
       icon: FileText,
       label: 'Total Notes',
       value: notes.length,
-      change: '+12%',
-      positive: true,
-      color: 'from-blue-500 to-cyan-500',
     },
     {
-      icon: BookOpen,
-      label: 'Flashcards',
-      value: 24,
-      change: '+8%',
-      positive: true,
-      color: 'from-emerald-500 to-teal-500',
+      icon: Image,
+      label: 'Documents',
+      value: docs,
+    },
+    {
+      icon: FileText,
+      label: 'Words Written',
+      value: totalWords.toLocaleString(),
     },
     {
       icon: Clock,
       label: 'Study Hours',
-      value: '12.5h',
-      change: '+23%',
-      positive: true,
-      color: 'from-amber-500 to-orange-500',
-    },
-    {
-      icon: Brain,
-      label: 'AI Insights',
-      value: 156,
-      change: null,
-      positive: true,
-      color: 'from-primary-500 to-accent-500',
+      value: studyHours > 0 ? `${studyHours}h` : 0,
     },
   ];
 
@@ -62,29 +52,16 @@ export default function StatisticsCards({ notes }: StatisticsCardsProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: i * 0.1 }}
-          className="glass-card p-5"
+          className="bg-[#161616] border border-[#2A2A2A] rounded-2xl p-5"
         >
           <div className="flex items-start justify-between">
-            <div
-              className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center`}
-            >
+            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
               <stat.icon className="w-5 h-5 text-white" />
             </div>
-            {stat.change && (
-              <span
-                className={`text-xs font-medium px-2 py-1 rounded-full ${
-                  stat.positive
-                    ? 'bg-accent-500/10 text-accent-400'
-                    : 'bg-red-500/10 text-red-400'
-                }`}
-              >
-                {stat.change}
-              </span>
-            )}
           </div>
           <div className="mt-4">
             <p className="text-2xl font-bold text-white">{stat.value}</p>
-            <p className="text-sm text-secondary-400">{stat.label}</p>
+            <p className="text-sm text-[#8A8A8A]">{stat.label}</p>
           </div>
         </motion.div>
       ))}
