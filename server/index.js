@@ -2,11 +2,26 @@ import express from 'express';
 import nodemailer from 'nodemailer';
 import cors from 'cors';
 import crypto from 'crypto';
-import 'dotenv/config';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
+dotenv.config();
 
 const app = express();
 app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173' }));
 app.use(express.json());
+
+const isProduction = process.env.NODE_ENV === 'production';
+
+if (isProduction) {
+  const distPath = path.join(__dirname, '..', 'dist');
+  app.use(express.static(distPath));
+}
 
 const tokens = new Map();
 
@@ -91,6 +106,12 @@ app.post('/api/reset-password', (req, res) => {
   tokens.delete(token);
   res.json({ success: true, email });
 });
+
+if (isProduction) {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

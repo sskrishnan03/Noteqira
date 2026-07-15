@@ -8,9 +8,11 @@
     "server": "cd server && npm start",
     "dev:all": "concurrently \"npm run dev\" \"npm run server\"",
     "build": "vite build",
+    "start": "cd server && npm start",
     "lint": "eslint .",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit -p tsconfig.app.json"
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
+    "render-build": "npm install && cd server && npm install && cd .. && npm run build"
   },
   "dependencies": {
     "@react-oauth/google": "^0.13.5",
