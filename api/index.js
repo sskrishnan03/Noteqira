@@ -2,10 +2,12 @@ import express from 'express';
 import nodemailer from 'nodemailer';
 import cors from 'cors';
 import crypto from 'crypto';
-import 'dotenv/config';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
-app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173' }));
+app.use(cors());
 app.use(express.json());
 
 const tokens = new Map();
@@ -92,7 +94,4 @@ app.post('/api/reset-password', (req, res) => {
   res.json({ success: true, email });
 });
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Noteqira server running on port ${PORT}`);
-});
+export default app;
