@@ -160,8 +160,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       body: JSON.stringify({ email }),
     });
     if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.error || 'Failed to send reset email');
+      let errorMessage = 'Failed to send reset email';
+      try {
+        const data = await res.json();
+        errorMessage = data.error || errorMessage;
+      } catch {
+        errorMessage = 'Server is offline or returned an invalid response';
+      }
+      throw new Error(errorMessage);
     }
   }, []);
 
@@ -185,8 +191,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       body: JSON.stringify({ token, email, newPassword }),
     });
     if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.error || 'Reset failed');
+      let errorMessage = 'Reset failed';
+      try {
+        const data = await res.json();
+        errorMessage = data.error || errorMessage;
+      } catch {
+        errorMessage = 'Server is offline or returned an invalid response';
+      }
+      throw new Error(errorMessage);
     }
     const users = getUsers();
     if (users[email]) {
