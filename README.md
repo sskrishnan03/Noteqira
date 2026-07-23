@@ -23,7 +23,7 @@ Noteqira is a full-featured note-taking application designed to replace scattere
 
 The application brings together four distinct note creation modes — typed text, live voice transcription, image-to-text OCR, and document parsing — under a single roof. Beyond capturing notes, Noteqira gives you a calendar to browse by date, analytics to track your writing rhythm, collections to keep things organized, and a read-aloud player to hear your notes spoken back to you.
 
-  Whether you are a student managing lecture notes, a professional tracking meeting minutes, or anyone who wants a dependable place to think, Noteqira gives you full control over your knowledge with a clean, distraction-free experience.
+Whether you are a student managing lecture notes, a professional tracking meeting minutes, or anyone who wants a dependable place to think, Noteqira gives you full control over your knowledge with a clean, distraction-free experience.
 
 ## Key Features
 
@@ -159,8 +159,6 @@ npm run dev
 
 The application will be available at `http://localhost:5173`.
 
----
-
 ## Usage
 
 Once the application is running, you will land on the **Landing Page** where you can sign in or create an account.
@@ -176,8 +174,6 @@ Once the application is running, you will land on the **Landing Page** where you
 - **Export any note** as a PDF or copy its full text to your clipboard from the editor toolbar.
 - **Have notes read aloud** by clicking the speaker icon in any editor. Choose a voice and adjust the playback settings.
 - **Archive or delete** notes you no longer need. Deleted notes go to Trash and stay there for 30 days before automatic cleanup.
-
----
 
 ## License
 
