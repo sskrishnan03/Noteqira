@@ -1,266 +1,192 @@
-<div align="center">
-  <img src="public/favicon.svg" alt="Noteqira" width="88" />
-  <h1>Noteqira</h1>
-  <p>
-    <strong>A modern note workspace for typed, voice, image, and document notes.</strong>
-    <br />
-    <em>Dashboard, calendar, analytics, search, storage, favorites, archive, trash, and persistent data in one clean app.</em>
-  </p>
-  <p>
-    <img src="https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=111111" alt="React 18" />
-    <img src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white" alt="TypeScript 5" />
-    <img src="https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white" alt="Vite 5" />
-    <img src="https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind CSS 3" />
-    <br />
-    <img src="https://img.shields.io/badge/Supabase-Ready-3FCF8E?logo=supabase&logoColor=111111" alt="Supabase ready" />
-    <img src="https://img.shields.io/badge/Recharts-Analytics-FF6384?logo=chartdotjs&logoColor=white" alt="Recharts analytics" />
-    <img src="https://img.shields.io/badge/Tesseract-OCR-5A67D8" alt="Tesseract OCR" />
-    <img src="https://img.shields.io/badge/Google-OAuth-4285F4?logo=google&logoColor=white" alt="Google OAuth" />
-  </p>
-</div>
+<p align="center">
+  <img src="img/note image.png" alt="Noteqira" width="100%" />
+</p>
+
+<h1 align="center">Noteqira</h1>
+
+<p align="center">
+  A modern, intelligent note workspace for typed, voice, image, and document notes — built to help you capture, organize, and revisit every idea from a single, beautifully crafted interface.
+</p>
+
+<p align="center">
+  <a href="#overview">Overview</a> &nbsp;&middot;&nbsp;
+  <a href="#key-features">Features</a> &nbsp;&middot;&nbsp;
+  <a href="#how-it-works">How It Works</a> &nbsp;&middot;&nbsp;
+  <a href="#installation">Installation</a> &nbsp;&middot;&nbsp;
+  <a href="#usage">Usage</a> &nbsp;&middot;&nbsp;
+  <a href="#license">License</a>
+</p>
 
 ---
 
 ## Overview
 
-Noteqira is a full note-taking workspace built with React, TypeScript, Vite, Tailwind CSS, Supabase-ready persistence, and a local browser database fallback. It is designed so notes stay available after refresh, reopen, and normal day-to-day use.
+Noteqira is a full-featured note-taking application designed to replace scattered apps and forgotten ideas with one unified workspace. Every piece of data stays on your device or in your own cloud — no third-party servers, no subscriptions, no compromises.
 
-The app supports manual notes, voice notes, image notes with OCR, document notes, calendar review, analytics charts, search, collections, favorites, recent notes, archived notes, and a trash system with restore and permanent delete controls.
+The application brings together four distinct note creation modes — typed text, live voice transcription, image-to-text OCR, and document parsing — under a single roof. Beyond capturing notes, Noteqira gives you a calendar to browse by date, analytics to track your writing rhythm, collections to keep things organized, and a read-aloud player to hear your notes spoken back to you.
 
----
-
-## Features at a Glance
-
-| Category | Features |
-|---|---|
-| **Dashboard** | Workspace summary, quick actions, recent notes, activity timeline, note statistics, and source overview |
-| **Calendar** | Calendar-based note review, date navigation, filters, day details, archive controls, and trash confirmation |
-| **Analytics** | Daily capture flow, weekly volume, source mix chart, study time, word count, streaks, focus signals, and trash health |
-| **Note Storage** | Separate views for typed notes, voice notes, image notes, and uploaded documents |
-| **Search** | Natural phrase and keyword search across note titles and note content |
-| **Organization** | Favorites, recent notes, archived notes, pinned state, collections, colors, and icons |
-| **Trash** | Soft delete confirmation, restore, permanent delete, and automatic cleanup after 30 days |
-| **Input Types** | Manual editor, speech transcription, image OCR, PDF parsing, DOCX parsing, and TXT upload support |
-| **Reading Tools** | Read-aloud player, voice settings, copy controls, and download/export actions |
-| **Account** | Email login, password reset server, Google sign-in, profile settings, theme settings, and session persistence |
-| **Data Layer** | Supabase REST storage when configured, plus local browser database fallback for saved notes |
+Whether you are a student managing lecture notes, a professional tracking meeting minutes, or anyone who wants a dependable place to think, Noteqira gives you full control over your knowledge with a clean, distraction-free experience.
 
 ---
 
-## Main Navigation
+## Key Features
 
-| Area | Route | What it does |
-|---|---|---|
-| Landing | `/` | Public entry page with authentication access |
-| Dashboard | `/dashboard` | Main workspace overview |
-| Calendar | `/calendar` | Browse notes by date and activity |
-| Analytics | `/analytics` | Charts, reports, trends, and workspace health |
-| Note Storage | `/storage` | Browse saved notes by source type |
-| Typed Notes | `/storage/manual` | Manual note library |
-| Voice Notes | `/storage/voice` | Speech-based notes |
-| Image Notes | `/storage/image` | OCR image notes |
-| Documents | `/storage/document` | Uploaded document notes |
-| Favorites | `/favorites` | Starred notes |
-| Recent | `/recent` | Recently updated notes |
-| Archived | `/archived` | Archived notes |
-| Trash | `/trash` | Deleted notes with restore and permanent delete actions |
-| Search | `/search` | Search titles and note content |
-| Collections | `/collections` | Collection management |
-| Settings | `/settings` | Profile and workspace preferences |
-| Reset Password | `/reset-password` | Password reset flow |
+**Multi-Source Note Capture**
 
----
+Write notes by hand, speak them into existence with real-time speech-to-text, upload an image and extract every word through OCR, or drop in a PDF, Word document, text file, CSV, JSON, XML, or HTML — Noteqira processes each source instantly and keeps the result in your library.
 
-## Note Workflows
+**Calendar Review**
 
-| Workflow | Route | Details |
-|---|---|---|
-| New typed note | `/notes/new` | Write, format, save, read aloud, copy, download, and delete with confirmation |
-| New voice note | `/notes/new/voice` | Record speech, transcribe, edit transcript, save, and keep drafts locally |
-| New image note | `/notes/new/image` | Upload an image, extract text with OCR, edit, save, and keep drafts locally |
-| New document note | `/notes/new/document` | Upload TXT, PDF, or DOCX files, parse text, edit, save, and keep recent document history |
-| View note | `/notes/:id` | Read note details, favorite, archive, edit, or move to trash |
-| Edit note | `/notes/:id/edit` | Update saved content without losing the existing note record |
+Browse every note by its creation or modification date on an interactive calendar. Switch between month, week, and day views, filter by source type or favorites, and open a side panel to see all notes from any selected day at a glance.
 
----
+**Workspace Analytics**
 
-## Trash Lifecycle
+Track your daily capture flow with an area chart, compare weekly volume with bar charts, see your source mix through a pie chart, monitor your writing streak, and review a daily summary with your top source, word count, and most recent note — all computed live from your actual data.
 
-Noteqira uses a safe delete flow so saved notes are not removed immediately.
+**Read Aloud**
 
-1. When a note is deleted, the app asks for confirmation.
-2. Confirmed deletes move the note to Trash instead of removing it.
-3. Trash keeps the note with `deleted_at` and `permanently_delete_at` timestamps.
-4. The Trash page can restore the note or permanently delete it.
-5. Notes can be automatically cleaned after 30 days.
-6. Expired trash is checked in both Supabase mode and local fallback mode.
+Have any note read back to you with a built-in text-to-speech player. Choose a voice, adjust the volume, skip forward or backward by sentence, and use keyboard shortcuts for hands-free listening.
 
----
+**Collections**
 
-## Data and Database
+Group related notes into color-coded collections with custom icons and descriptions. Create, rename, recolor, and delete collections as your thinking evolves.
 
-Noteqira can run with Supabase as the shared database and also keeps a local browser database fallback. This means the app remains usable even before Supabase is configured, and saved data stays available after refresh.
+**Search**
 
-### Supabase Tables
+Find any note in seconds with a natural search that scans both titles and full content. Results update instantly, and keyboard shortcuts let you jump to search from anywhere in the app.
 
-| Table | Purpose |
-|---|---|
-| `noteqira_profiles` | User profile, settings, avatar, storage limits, and preferences |
-| `noteqira_notebooks` | Collections with colors, icons, ordering, favorites, and archive state |
-| `noteqira_notes` | Notes, content, source type, favorite state, archive state, trash timestamps, counts, and image data |
-| `noteqira_tags` | Tag names and colors |
-| `noteqira_note_tags` | Many-to-many note/tag links |
-| `noteqira_activity_log` | Workspace activity history |
+**Favorites and Recent Notes**
 
-The migration also includes indexes for note loading, trash filtering, source filtering, collection sorting, and activity history. It includes a database function named `noteqira_delete_expired_trash()` for expired trash cleanup.
+Star the notes that matter most for instant access on the favorites page. The recent page keeps your most recently updated notes one click away.
+
+**Archive and Trash**
+
+Archive notes you want to keep but hide from your active workspace. Delete notes you no longer need — they move to Trash, stay there for 30 days, and can be restored or permanently removed at any time. Expired trash is cleaned up automatically.
+
+**PDF Export**
+
+Export any note as a cleanly formatted PDF file with proper headings, paragraph spacing, and list formatting. Print directly from the editor or copy the full text to your clipboard.
+
+**Undo and Redo**
+
+Every edit in the note editor, voice editor, image editor, and document editor supports undo and redo with a 50-step history. Adjust font size, toggle fullscreen, and use keyboard shortcuts throughout.
+
+**Secure Authentication**
+
+Sign up with email and password, or use Google OAuth for instant access. Password reset flows through a dedicated email server. All sessions persist across browser refreshes.
+
+**Data Persistence**
+
+Notes, collections, tags, and activity logs are stored through Supabase when configured. If Supabase is unavailable, the app seamlessly falls back to a local browser database so your data always survives a refresh.
 
 ---
 
-## Quick Start
+## How It Works
 
-### Prerequisites
+**1. Open the Application**
 
-- Node.js 18+
-- npm 9+
-- A Supabase project for cloud persistence
-- A Google OAuth client ID if Google sign-in is enabled
-- Gmail SMTP credentials if password reset email is enabled
+Launch the app in your browser. The landing page lets you sign in, sign up, or continue with Google. Everything loads instantly since the app runs entirely on your machine.
 
-### Installation
+**2. Land on the Dashboard**
+
+After signing in, the dashboard gives you a complete overview — total notes, favorites, archived count, quick actions for creating different note types, your most recent notes, a notes summary by type, and a timeline of your recent activity.
+
+**3. Create a Note**
+
+Tap the quick action for the type of note you want. Type a manual note, record your voice for automatic transcription, upload an image for OCR extraction, or drop in a document to have its contents parsed. Each editor provides undo, redo, font size controls, fullscreen mode, copy to clipboard, PDF export, and a read-aloud player.
+
+**4. Browse by Calendar**
+
+Open the calendar to see your notes mapped across dates. Toggle between created and modified dates, switch views, apply filters, and click any day to see a panel listing every note from that date.
+
+**5. Review Analytics**
+
+Head to analytics to see your writing streak, weekly trend, source mix, daily capture flow, and focus signals — all derived from your actual note data in real time.
+
+**6. Organize with Collections**
+
+Create collections with names, colors, and icons. Assign notes to collections from the editor. Browse collections from the sidebar to see grouped notes at a glance.
+
+**7. Search and Navigate**
+
+Press Command-K or Control-K to jump straight to search. Type a word or phrase and browse matching notes. Use the sidebar to move between dashboard, calendar, analytics, storage, favorites, recent, archived, and trash.
+
+**8. Manage and Clean Up**
+
+Archive notes you want to keep out of sight. Delete notes you no longer need and let them sit in Trash for 30 days before automatic cleanup. Restore anything before it expires.
+
+---
+
+## Installation
+
+**Prerequisites**
+
+- Node.js 18 or higher
+- npm 9 or higher
+
+**Setup**
 
 ```bash
+git clone https://github.com/your-username/noteqira.git
+cd noteqira
 npm install
-cd server
-npm install
-cd ..
 ```
 
-### Environment Variables
+**Environment Configuration**
 
-Create or update `.env` in the project root:
+Create a `.env` file in the project root:
 
-```env
+```
 VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-Create `server/.env` only when running password reset email:
+If you want password reset email to work, also create `server/.env`:
 
-```env
+```
 SMTP_EMAIL=your_email@gmail.com
 SMTP_APP_PASSWORD=your_gmail_app_password
 FRONTEND_URL=http://localhost:5173
 PORT=3001
 ```
 
-### Supabase Setup
+**Supabase Setup**
 
-1. Open your Supabase project.
-2. Go to the SQL editor.
-3. Run `supabase/migrations/20260714183000_noteqira_core.sql`.
-4. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to `.env`.
-5. Restart the app after changing environment values.
+1. Open your Supabase project dashboard.
+2. Navigate to the SQL editor.
+3. Run the migration file at `supabase/migrations/20260714183000_noteqira_core.sql`.
+4. Add your Supabase URL and anon key to `.env`.
+5. Restart the app after updating environment values.
 
----
+**Start the Application**
 
-## Scripts
-
-| Command | Description |
-|---|---|
-| `npm run dev` | Start the Vite development server |
-| `npm run server` | Start the password reset email server |
-| `npm run dev:all` | Start frontend and reset server together |
-| `npm run typecheck` | Run TypeScript checks |
-| `npm run lint` | Run ESLint |
-| `npm run build` | Create a production build |
-| `npm run preview` | Preview the production build locally |
-
-Open the app at `http://localhost:5173`.
-
----
-
-## Tech Stack
-
-| Layer | Tools |
-|---|---|
-| Frontend | React 18, TypeScript, Vite, Tailwind CSS |
-| Routing | React Router |
-| Data Fetching | TanStack Query |
-| Charts | Recharts |
-| Animation | Framer Motion |
-| Icons | Lucide React |
-| OCR | Tesseract.js |
-| Documents | PDF.js, Mammoth |
-| Export | jsPDF |
-| Auth UI | Local email/password session and Google OAuth |
-| Backend Helper | Express, Nodemailer, CORS |
-| Database | Supabase REST tables with local browser database fallback |
-
----
-
-## Project Structure
-
-```text
-Noteqira
-+-- public/
-|   +-- favicon.svg
-+-- server/
-|   +-- index.js
-|   +-- package.json
-+-- src/
-|   +-- components/
-|   |   +-- ReadAloud/
-|   |   +-- calendar/
-|   |   +-- dashboard/
-|   +-- lib/
-|   |   +-- auth.tsx
-|   |   +-- data.ts
-|   |   +-- export.ts
-|   +-- pages/
-|   |   +-- Analytics.tsx
-|   |   +-- Calendar.tsx
-|   |   +-- Dashboard.tsx
-|   |   +-- Trash.tsx
-|   |   +-- note creation and library pages
-|   +-- types/
-|   +-- App.tsx
-|   +-- main.tsx
-+-- supabase/
-|   +-- migrations/
-|   |   +-- 20260714183000_noteqira_core.sql
-+-- package.json
-+-- README.md
+```bash
+npm run dev
 ```
 
----
-
-## Persistence Behavior
-
-| Situation | Result |
-|---|---|
-| Supabase values are configured | Notes, collections, tags, and activity are saved through Supabase REST endpoints |
-| Supabase is unavailable | The app falls back to the local browser database |
-| Browser refresh | Saved local or Supabase-backed notes remain available |
-| Note delete | Note moves to Trash after confirmation |
-| Trash restore | Note returns to the active workspace |
-| Permanent delete | Note is removed from storage |
-| Trash reaches 30 days | Expired items can be cleaned automatically |
+The application will be available at `http://localhost:5173`.
 
 ---
 
-## Quality Checklist
+## Usage
 
-- Dashboard, calendar, analytics, storage, favorites, recent, archived, trash, search, collections, and settings are routed.
-- Notes can be created from typed text, voice, images, and documents.
-- Deleted notes move to Trash first.
-- Trash supports restore and permanent delete.
-- Saved data survives refresh through Supabase or local fallback.
-- Analytics reads real note data and shows charts, reports, and cleanup health.
-- The app keeps environment configuration in `.env`.
+Once the application is running, you will land on the **Landing Page** where you can sign in or create an account.
+
+- **Create a typed note** by pressing Command-N or Control-N, or use the quick action on the dashboard. Write freely with the built-in editor.
+- **Record a voice note** by navigating to the voice note page. Speak naturally and watch the transcript appear in real time. Pause, resume, or stop at any moment.
+- **Create an image note** by uploading a photo or screenshot. Noteqira will extract all text using OCR and present it for editing and saving.
+- **Import a document** by uploading a PDF, Word file, plain text, CSV, JSON, XML, or HTML file. The content is parsed and loaded into the editor.
+- **Browse your calendar** to find notes by date. Click any day to see what you captured, and use filters to narrow by type or favorites.
+- **Check your analytics** to see your writing streak, source breakdown, weekly volume, and daily reports.
+- **Organize notes** into collections with custom colors and icons from the collections page.
+- **Search for anything** using the search page or the keyboard shortcut. Results appear instantly as you type.
+- **Export any note** as a PDF or copy its full text to your clipboard from the editor toolbar.
+- **Have notes read aloud** by clicking the speaker icon in any editor. Choose a voice and adjust the playback settings.
+- **Archive or delete** notes you no longer need. Deleted notes go to Trash and stay there for 30 days before automatic cleanup.
 
 ---
 
 ## License
 
-Private project.
+This project is provided for personal and educational use.
