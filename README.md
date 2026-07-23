@@ -17,17 +17,13 @@
   <a href="#license">License</a>
 </p>
 
----
-
 ## Overview
 
 Noteqira is a full-featured note-taking application designed to replace scattered apps and forgotten ideas with one unified workspace. Every piece of data stays on your device or in your own cloud — no third-party servers, no subscriptions, no compromises.
 
 The application brings together four distinct note creation modes — typed text, live voice transcription, image-to-text OCR, and document parsing — under a single roof. Beyond capturing notes, Noteqira gives you a calendar to browse by date, analytics to track your writing rhythm, collections to keep things organized, and a read-aloud player to hear your notes spoken back to you.
 
-Whether you are a student managing lecture notes, a professional tracking meeting minutes, or anyone who wants a dependable place to think, Noteqira gives you full control over your knowledge with a clean, distraction-free experience.
-
----
+  Whether you are a student managing lecture notes, a professional tracking meeting minutes, or anyone who wants a dependable place to think, Noteqira gives you full control over your knowledge with a clean, distraction-free experience.
 
 ## Key Features
 
@@ -79,8 +75,6 @@ Sign up with email and password, or use Google OAuth for instant access. Passwor
 
 Notes, collections, tags, and activity logs are stored through Supabase when configured. If Supabase is unavailable, the app seamlessly falls back to a local browser database so your data always survives a refresh.
 
----
-
 ## How It Works
 
 **1. Open the Application**
@@ -114,8 +108,6 @@ Press Command-K or Control-K to jump straight to search. Type a word or phrase a
 **8. Manage and Clean Up**
 
 Archive notes you want to keep out of sight. Delete notes you no longer need and let them sit in Trash for 30 days before automatic cleanup. Restore anything before it expires.
-
----
 
 ## Installation
 
